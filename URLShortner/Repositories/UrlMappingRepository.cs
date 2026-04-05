@@ -8,6 +8,8 @@ public class UrlMappingRepository(AppDbContext context)
     public async Task<UrlMapping?> GetByShortCode(string shortCode) => await context.UrlMappings
             .FirstOrDefaultAsync(x => x.ShortCode == shortCode);
 
+    public async Task<UrlMapping?> GetByLongUrl(string longUrl) => await context.UrlMappings.FirstOrDefaultAsync(x => x.LongUrl == longUrl);
+
     public async Task Add(UrlMapping url)
     {
         context.UrlMappings.Add(url);

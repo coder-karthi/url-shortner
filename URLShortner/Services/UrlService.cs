@@ -6,6 +6,13 @@ public class UrlService(Base62Service base62Service, UrlMappingRepository urlMap
 {
     public async Task<string> CreateShortUrl(string longUrl)
     {
+        var existingShortCode = await urlMappingRepository.GetByLongUrl(longUrl);
+
+        if (existingShortCode is not null)
+        {
+            return existingShortCode.ShortCode;
+        }
+
         string shortCode;
 
         do

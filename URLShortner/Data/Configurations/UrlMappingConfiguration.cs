@@ -12,12 +12,15 @@ public class UrlMappingConfiguration : IEntityTypeConfiguration<UrlMapping>
         builder.Property(x => x.LongUrl)
             .IsRequired()
             .HasMaxLength(2048);
-        
+
         builder.Property(x => x.ShortCode)
             .IsRequired()
             .HasMaxLength(10);
-        
+
         builder.HasIndex(x => x.ShortCode)
+            .IsUnique();
+
+        builder.HasIndex(x => x.LongUrl)
             .IsUnique();
 
         builder.Property(x => x.CreatedAt)
