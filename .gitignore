@@ -1,0 +1,32 @@
+# Build results
+bin/
+obj/
+
+# VS Code
+.vscode/
+
+# User-specific files
+*.user
+*.suo
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+# Environment files
+.env
+
+# ASP.NET Core
+appsettings.Development.json
+
+# Rider / VS
+.idea/
+*.sln.iml
+
+# Publish output
+out/
+
+# Node (if added later)
+node_modules/

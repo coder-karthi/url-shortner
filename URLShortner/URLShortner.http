@@ -1,0 +1,11 @@
+@baseUrl = http://localhost:5000
+
+### Create short URL
+POST {{baseUrl}}/api/url?longUrl=https://google.com
+Content-Type: application/json
+
+### Redirect (paste short code after testing)
+GET {{baseUrl}}/abc123
+
+### Get analytics
+GET {{baseUrl}}/api/url/abc123
