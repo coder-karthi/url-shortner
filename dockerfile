@@ -13,4 +13,4 @@ COPY --from=build /app/out ./
 
 ENV ASPNETCORE_URLS=http://+:8080
 
-ENTRYPOINT ["dotnet", "UrlShortener.dll"]
+ENTRYPOINT ["dotnet", "URLShortner.dll"]
