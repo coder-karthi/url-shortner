@@ -1,4 +1,5 @@
 using URLShortner.Repositories;
+using URLShortner.Contracts;
 
 namespace URLShortner.Services;
 
@@ -32,6 +33,9 @@ public class UrlService(Base62Service base62Service, UrlMappingRepository urlMap
     }
 
     public async Task<UrlMapping?> GetByShortCode(string shortCode) => await urlMappingRepository.GetByShortCode(shortCode);
+
+    public async Task<PagedResult<UrlMappingListItemResponse>> GetUrlMappings(UrlMappingListQuery query) =>
+        await urlMappingRepository.GetUrlMappings(query);
 
     public async Task IncrementClick(string shortCode)
     {

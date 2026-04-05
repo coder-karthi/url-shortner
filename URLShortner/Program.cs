@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using URLShortner.Contracts;
 using URLShortner.Data;
 using URLShortner.Repositories;
 using URLShortner.Services;
@@ -63,6 +64,37 @@ app.MapPost("/api/url", async (string longUrl, UrlService service, HttpContext h
     {
         shortUrl = $"{baseUrl}/{shortCode}"
     });
+});
+
+app.MapGet("/api/url", async ([AsParameters] UrlMappingListQuery query, UrlService service) =>
+{
+    var allowedSortFields = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "createdAt",
+        "clickCount",
+        "shortCode",
+        "longUrl"
+    };
+
+    if (!allowedSortFields.Contains(query.SortBy))
+    {
+        return Results.BadRequest(new
+        {
+            message = "Invalid sortBy value. Supported values: createdAt, clickCount, shortCode, longUrl."
+        });
+    }
+
+    if (!string.Equals(query.SortDirection, "asc", StringComparison.OrdinalIgnoreCase) &&
+        !string.Equals(query.SortDirection, "desc", StringComparison.OrdinalIgnoreCase))
+    {
+        return Results.BadRequest(new
+        {
+            message = "Invalid sortDirection value. Supported values: asc, desc."
+        });
+    }
+
+    var result = await service.GetUrlMappings(query);
+    return Results.Ok(result);
 });
 
 app.MapGet("/{shortCode}", async (string shortCode, UrlService service) =>
